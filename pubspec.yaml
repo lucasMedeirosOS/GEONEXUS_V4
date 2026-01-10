@@ -1,0 +1,58 @@
+name: geonexus
+description: "GEONEXUS V4 - GovTech para transparência governamental"
+publish_to: 'none'
+version: 4.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^2.4.9
+  riverpod_annotation: ^2.3.3
+
+  # Maps & Location
+  google_maps_flutter: ^2.5.0
+  google_maps_cluster_manager: ^3.0.0+1
+  geolocator: ^11.0.0
+  
+  # Supabase Backend
+  supabase_flutter: ^2.3.0
+  
+  # HTTP & Networking
+  http: ^1.1.0
+  dio: ^5.4.0
+  
+  # Environment Config
+  flutter_dotenv: ^5.1.0
+  
+  # UI Components
+  cupertino_icons: ^1.0.6
+  flutter_animate: ^4.3.0
+  shimmer: ^3.0.0
+  cached_network_image: ^3.3.1
+  google_fonts: ^6.1.0
+  
+  # Utils
+  intl: ^0.19.0
+  equatable: ^2.0.5
+  dartz: ^0.10.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  riverpod_generator: ^2.3.9
+  build_runner: ^2.4.7
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - .env
+    - assets/images/
+    - assets/icons/
+    - assets/map_style_dark.json
