@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 
 /// Planos de usuário do GeoNexus
 /// 

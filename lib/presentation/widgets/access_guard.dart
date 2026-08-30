@@ -88,7 +88,7 @@ class AccessGuard extends ConsumerWidget {
             Icon(
               Icons.lock_outline,
               size: 64,
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withValues(alpha: 0.3),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -112,7 +112,7 @@ class AccessGuard extends ConsumerWidget {
           Icon(
             Icons.error_outline,
             size: 48,
-            color: Colors.red.withOpacity(0.5),
+            color: Colors.red.withValues(alpha: 0.5),
           ),
           const SizedBox(height: 16),
           const Text(
@@ -136,7 +136,7 @@ class AccessGuard extends ConsumerWidget {
           decoration: BoxDecoration(
             color: const Color(0xFF1E1E2E),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: purpleNeon.withOpacity(0.3)),
+            border: Border.all(color: purpleNeon.withValues(alpha: 0.3)),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -146,10 +146,10 @@ class AccessGuard extends ConsumerWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: purpleNeon.withOpacity(0.15),
+                  color: purpleNeon.withValues(alpha: 0.15),
                   boxShadow: [
                     BoxShadow(
-                      color: purpleNeon.withOpacity(0.2),
+                      color: purpleNeon.withValues(alpha: 0.2),
                       blurRadius: 20,
                     ),
                   ],
@@ -179,7 +179,7 @@ class AccessGuard extends ConsumerWidget {
                     'Este recurso está disponível a partir do plano ${requiredPlan.displayName}.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.7),
+                  color: Colors.white.withValues(alpha: 0.7),
                   fontSize: 14,
                 ),
               ),
@@ -237,9 +237,9 @@ class AccessGuard extends ConsumerWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: color.withOpacity(0.15),
+            color: color.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: color.withOpacity(0.3)),
+            border: Border.all(color: color.withValues(alpha: 0.3)),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -261,7 +261,7 @@ class AccessGuard extends ConsumerWidget {
         Text(
           label,
           style: TextStyle(
-            color: Colors.white.withOpacity(0.5),
+            color: Colors.white.withValues(alpha: 0.5),
             fontSize: 10,
           ),
         ),

@@ -13,7 +13,7 @@ class LoadingOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppTheme.primaryBlack.withOpacity(0.7),
+      color: AppTheme.primaryBlack.withValues(alpha: 0.7),
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -25,11 +25,11 @@ class LoadingOverlay extends StatelessWidget {
                 color: AppTheme.cardDark,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: AppTheme.primaryPurple.withOpacity(0.3),
+                  color: AppTheme.primaryPurple.withValues(alpha: 0.3),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppTheme.primaryPurple.withOpacity(0.2),
+                    color: AppTheme.primaryPurple.withValues(alpha: 0.2),
                     blurRadius: 20,
                   ),
                 ],
@@ -42,10 +42,10 @@ class LoadingOverlay extends StatelessWidget {
                     height: 48,
                     child: CircularProgressIndicator(
                       strokeWidth: 3,
-                      valueColor: AlwaysStoppedAnimation<Color>(
+                      valueColor: const AlwaysStoppedAnimation<Color>(
                         AppTheme.accentGold,
                       ),
-                      backgroundColor: AppTheme.primaryPurple.withOpacity(0.2),
+                      backgroundColor: AppTheme.primaryPurple.withValues(alpha: 0.2),
                     ),
                   ),
                   if (message != null) ...[
@@ -121,7 +121,7 @@ class _ShimmerLoadingState extends State<ShimmerLoading>
             gradient: LinearGradient(
               begin: Alignment(_animation.value - 1, 0),
               end: Alignment(_animation.value + 1, 0),
-              colors: [
+              colors: const [
                 AppTheme.cardDark,
                 AppTheme.surfaceDark,
                 AppTheme.cardDark,

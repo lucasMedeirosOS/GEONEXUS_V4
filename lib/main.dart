@@ -11,46 +11,27 @@ import 'presentation/providers/auth_providers.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Carrega variáveis de ambiente
   try {
     await dotenv.load(fileName: '.env');
-    debugPrint('✓ Variáveis de ambiente carregadas');
   } catch (e) {
-    debugPrint('✗ Erro carregando .env: $e');
-    debugPrint('  Certifique-se de que o arquivo .env existe na raiz do projeto');
+    throw StateError('Não foi possível carregar o arquivo .env: $e');
   }
 
-  // Valida chaves de API
   final supabaseUrl = dotenv.env['SUPABASE_URL'];
   final supabaseKey = dotenv.env['SUPABASE_ANON_KEY'];
-  final mapsKey = dotenv.env['GOOGLE_MAPS_API_KEY'];
 
-  if (supabaseUrl == null || supabaseUrl.isEmpty || 
-      supabaseUrl.contains('SEU_PROJETO')) {
-    debugPrint('⚠ SUPABASE_URL não configurada no .env');
-  }
-
-  if (supabaseKey == null || supabaseKey.isEmpty ||
+  if (supabaseUrl == null || supabaseUrl.isEmpty ||
+      supabaseUrl.contains('SEU_PROJETO') ||
+      supabaseKey == null || supabaseKey.isEmpty ||
       supabaseKey.contains('SUA_ANON_KEY')) {
-    debugPrint('⚠ SUPABASE_ANON_KEY não configurada no .env');
+    throw StateError('SUPABASE_URL e SUPABASE_ANON_KEY devem ser configuradas no .env');
   }
 
-  if (mapsKey == null || mapsKey.isEmpty ||
-      mapsKey.contains('SUA_CHAVE')) {
-    debugPrint('⚠ GOOGLE_MAPS_API_KEY não configurada no .env');
-  }
-
-  // Inicializa Supabase (mesmo com valores vazios para não crashar)
-  try {
-    await Supabase.initialize(
-      url: supabaseUrl ?? 'https://placeholder.supabase.co',
-      anonKey: supabaseKey ?? 'placeholder-key',
-      debug: false,
-    );
-    debugPrint('✓ Supabase inicializado');
-  } catch (e) {
-    debugPrint('✗ Erro inicializando Supabase: $e');
-  }
+  await Supabase.initialize(
+    url: supabaseUrl,
+    anonKey: supabaseKey,
+    debug: false,
+  );
 
   runApp(
     const ProviderScope(

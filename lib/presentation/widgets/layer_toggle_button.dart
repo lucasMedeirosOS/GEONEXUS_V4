@@ -32,13 +32,13 @@ class LayerToggleButton extends StatelessWidget {
             color: isActive ? activeColor : AppTheme.cardDark,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: isActive ? activeColor : AppTheme.textMuted.withOpacity(0.3),
+              color: isActive ? activeColor : AppTheme.textMuted.withValues(alpha: 0.3),
               width: 1.5,
             ),
             boxShadow: isActive
                 ? [
                     BoxShadow(
-                      color: activeColor.withOpacity(0.4),
+                      color: activeColor.withValues(alpha: 0.4),
                       blurRadius: 12,
                       offset: const Offset(0, 4),
                     ),

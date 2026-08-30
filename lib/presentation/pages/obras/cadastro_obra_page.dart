@@ -223,17 +223,17 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [iconColor.withOpacity(0.2), Colors.transparent],
+          colors: [iconColor.withValues(alpha: 0.2), Colors.transparent],
         ),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: iconColor.withOpacity(0.3)),
+        border: Border.all(color: iconColor.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.2),
+              color: iconColor.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -260,7 +260,7 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
                       ? 'Atualize os dados da obra cadastrada'
                       : 'Documente obras e ações realizadas na sua região',
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.7),
+                    color: Colors.white.withValues(alpha: 0.7),
                     fontSize: 12,
                   ),
                 ),
@@ -281,9 +281,9 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.05),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.white.withOpacity(0.1)),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<ObraStatus>(
@@ -383,17 +383,17 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
         labelText: label,
         hintText: hint,
         labelStyle: const TextStyle(color: Colors.white70),
-        hintStyle: TextStyle(color: Colors.white.withOpacity(0.3)),
+        hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.3)),
         prefixIcon: icon != null ? Icon(icon, color: _purpleNeon, size: 20) : null,
         filled: true,
-        fillColor: Colors.white.withOpacity(0.05),
+        fillColor: Colors.white.withValues(alpha: 0.05),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -425,7 +425,7 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
             const SizedBox(width: 8),
             Container(
               decoration: BoxDecoration(
-                color: _greenSuccess.withOpacity(0.2),
+                color: _greenSuccess.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: IconButton(
@@ -453,9 +453,9 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: _goldNeon.withOpacity(0.15),
+        color: _goldNeon.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _goldNeon.withOpacity(0.3)),
+        border: Border.all(color: _goldNeon.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -467,7 +467,7 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
           const SizedBox(width: 6),
           GestureDetector(
             onTap: () => _removeRua(rua),
-            child: Icon(Icons.close, size: 16, color: _goldNeon.withOpacity(0.7)),
+            child: Icon(Icons.close, size: 16, color: _goldNeon.withValues(alpha: 0.7)),
           ),
         ],
       ),
@@ -486,9 +486,9 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: _greenSuccess.withOpacity(0.15),
+              color: _greenSuccess.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: _greenSuccess.withOpacity(0.3)),
+              border: Border.all(color: _greenSuccess.withValues(alpha: 0.3)),
             ),
             child: Row(
               children: [
@@ -504,7 +504,7 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
                       ),
                       Text(
                         'Lat: ${_latitude!.toStringAsFixed(6)}, Lng: ${_longitude!.toStringAsFixed(6)}',
-                        style: TextStyle(color: Colors.white.withOpacity(0.7), fontSize: 12),
+                        style: TextStyle(color: Colors.white.withValues(alpha: 0.7), fontSize: 12),
                       ),
                     ],
                   ),
@@ -534,13 +534,13 @@ class _CadastroObraPageState extends ConsumerState<CadastroObraPage> {
                       : const Icon(Icons.my_location, size: 18),
                   label: Text(_isCapturingLocation ? 'Capturando...' : 'Minha Localização'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: _purpleNeon.withOpacity(0.2),
+                    backgroundColor: _purpleNeon.withValues(alpha: 0.2),
                     foregroundColor: _purpleNeon,
                     elevation: 0,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(color: _purpleNeon.withOpacity(0.5)),
+                      side: BorderSide(color: _purpleNeon.withValues(alpha: 0.5)),
                     ),
                   ),
                 ),

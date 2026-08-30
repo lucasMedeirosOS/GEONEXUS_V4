@@ -3,15 +3,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../domain/entities/local_votacao.dart';
 import '../../domain/entities/voto_secao.dart';
-import '../../domain/entities/obra.dart';
 import '../../domain/entities/obra_acao.dart';
-import '../../domain/entities/resumo_geonexus.dart';
 import '../../domain/entities/map_pin.dart';
 import '../../domain/repositories/eleitoral_repository.dart';
-import '../../domain/repositories/obras_repository.dart';
 import '../models/local_votacao_model.dart';
 import '../models/voto_secao_model.dart';
-import '../models/resumo_geonexus_model.dart';
 import '../models/map_pin_model.dart';
 import '../models/obra_acao_model.dart';
 import '../models/dashboard_stats.dart';
@@ -722,7 +718,7 @@ class SupabaseRepositoryImpl implements EleitoralRepository {
       print('╠══════════════════════════════════════════════════════════════╣');
       print('║  📍 Locais válidos: ${pins.length.toString().padRight(40)}║');
       print('║  ⚠️  Descartados (coords nulas): ${skippedCount.toString().padRight(27)}║');
-      print('║  🗳️  Filtro: $cargo $ano'.padRight(61) + '║');
+      print('${'║  🗳️  Filtro: $cargo $ano'.padRight(61)}║');
       print('╚══════════════════════════════════════════════════════════════╝');
       print('');
 
@@ -1080,12 +1076,7 @@ class SupabaseRepositoryImpl implements EleitoralRepository {
         },
       ).single();
 
-      if (response == null) {
-        print('⚠️ RPC retornou null, usando valores padrão');
-        return Right(DashboardStats.empty());
-      }
-
-      final stats = DashboardStats.fromJson(response as Map<String, dynamic>);
+      final stats = DashboardStats.fromJson(response);
       print('✅ KPIs carregados: $stats');
 
       return Right(stats);

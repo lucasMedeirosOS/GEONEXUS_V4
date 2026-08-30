@@ -85,11 +85,11 @@ class AppTheme {
       cardTheme: CardThemeData(
         color: cardDark,
         elevation: 8,
-        shadowColor: primaryPurple.withOpacity(0.3),
+        shadowColor: primaryPurple.withValues(alpha: 0.3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
-            color: primaryPurple.withOpacity(0.2),
+            color: primaryPurple.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -105,7 +105,7 @@ class AppTheme {
             borderRadius: BorderRadius.circular(12),
           ),
           elevation: 4,
-          shadowColor: primaryPurple.withOpacity(0.5),
+          shadowColor: primaryPurple.withValues(alpha: 0.5),
         ),
       ),
 
@@ -193,7 +193,7 @@ class AppTheme {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: textMuted.withOpacity(0.3)),
+          borderSide: BorderSide(color: textMuted.withValues(alpha: 0.3)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -210,7 +210,7 @@ class AppTheme {
 
       // Divider
       dividerTheme: DividerThemeData(
-        color: textMuted.withOpacity(0.2),
+        color: textMuted.withValues(alpha: 0.2),
         thickness: 1,
       ),
 
@@ -228,15 +228,15 @@ class AppTheme {
 
   // ==================== BOX DECORATIONS ====================
   static BoxDecoration get glassCard => BoxDecoration(
-        color: cardDark.withOpacity(0.8),
+        color: cardDark.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: primaryPurple.withOpacity(0.2),
+          color: primaryPurple.withValues(alpha: 0.2),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: primaryPurple.withOpacity(0.1),
+            color: primaryPurple.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -247,12 +247,12 @@ class AppTheme {
         gradient: cardGradient,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: accentGold.withOpacity(0.3),
+          color: accentGold.withValues(alpha: 0.3),
           width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: accentGold.withOpacity(0.15),
+            color: accentGold.withValues(alpha: 0.15),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),

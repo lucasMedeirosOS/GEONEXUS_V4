@@ -76,7 +76,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                 Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: _purpleNeon.withOpacity(0.15),
+                    color: _purpleNeon.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.filter_list, color: _purpleNeon),
@@ -264,7 +264,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
-                            color: Colors.red.withOpacity(0.2),
+                            color: Colors.red.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Row(
@@ -308,7 +308,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
                     return Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.05),
+                        color: Colors.white.withValues(alpha: 0.05),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(color: Colors.white24),
                       ),
@@ -406,7 +406,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? _purpleNeon : Colors.white.withOpacity(0.05),
+          color: isSelected ? _purpleNeon : Colors.white.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected ? _purpleNeon : Colors.white24,
@@ -415,7 +415,7 @@ class _FilterBottomSheetState extends ConsumerState<FilterBottomSheet> {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: _purpleNeon.withOpacity(0.3),
+                    color: _purpleNeon.withValues(alpha: 0.3),
                     blurRadius: 8,
                     spreadRadius: 1,
                   ),

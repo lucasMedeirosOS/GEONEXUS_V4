@@ -104,11 +104,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             gradient: LinearGradient(
-              colors: [_purpleNeon, _purpleNeon.withOpacity(0.6)],
+              colors: [_purpleNeon, _purpleNeon.withValues(alpha: 0.6)],
             ),
             boxShadow: [
               BoxShadow(
-                color: _purpleNeon.withOpacity(0.4),
+                color: _purpleNeon.withValues(alpha: 0.4),
                 blurRadius: 30,
                 spreadRadius: 5,
               ),
@@ -135,7 +135,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           'Inteligência Eleitoral Geográfica',
           style: TextStyle(
             fontSize: 14,
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white.withValues(alpha: 0.7),
           ),
         ),
       ],
@@ -202,14 +202,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       prefixIcon: Icon(icon, color: _purpleNeon),
       suffixIcon: suffixIcon,
       filled: true,
-      fillColor: Colors.white.withOpacity(0.05),
+      fillColor: Colors.white.withValues(alpha: 0.05),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+        borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+        borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -266,7 +266,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       children: [
         Text(
           'Não tem conta? ',
-          style: TextStyle(color: Colors.white.withOpacity(0.7)),
+          style: TextStyle(color: Colors.white.withValues(alpha: 0.7)),
         ),
         TextButton(
           onPressed: () {

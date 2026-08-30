@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/app_theme.dart';
@@ -138,8 +137,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: _purpleNeon.withOpacity(0.15),
-            border: Border.all(color: _purpleNeon.withOpacity(0.3)),
+            color: _purpleNeon.withValues(alpha: 0.15),
+            border: Border.all(color: _purpleNeon.withValues(alpha: 0.3)),
           ),
           child: const Icon(
             Icons.person_add,
@@ -161,7 +160,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           'Preencha seus dados para começar',
           style: TextStyle(
             fontSize: 14,
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white.withValues(alpha: 0.7),
           ),
         ),
       ],
@@ -273,7 +272,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.03),
+        color: Colors.white.withValues(alpha: 0.03),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -320,14 +319,14 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       prefixIcon: Icon(icon, color: _purpleNeon),
       suffixIcon: suffixIcon,
       filled: true,
-      fillColor: Colors.white.withOpacity(0.05),
+      fillColor: Colors.white.withValues(alpha: 0.05),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+        borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
+        borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
@@ -384,7 +383,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
       children: [
         Text(
           'Já tem conta? ',
-          style: TextStyle(color: Colors.white.withOpacity(0.7)),
+          style: TextStyle(color: Colors.white.withValues(alpha: 0.7)),
         ),
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

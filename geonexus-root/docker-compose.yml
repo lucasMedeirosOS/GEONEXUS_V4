@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgis:
+    image: postgis/postgis:16-3.4
+    container_name: geonexus_postgis
+    environment:
+      POSTGRES_USER: geonexus_user
+      POSTGRES_PASSWORD: geonexus_password
+      POSTGRES_DB: geonexus_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgis_data:

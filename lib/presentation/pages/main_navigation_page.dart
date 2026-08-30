@@ -54,7 +54,7 @@ class _MainNavigationPageState extends ConsumerState<MainNavigationPage> {
         color: const Color(0xFF121218),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withValues(alpha: 0.5),
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -87,7 +87,7 @@ class _MainNavigationPageState extends ConsumerState<MainNavigationPage> {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: isActive
             ? BoxDecoration(
-                color: _purpleNeon.withOpacity(0.15),
+                color: _purpleNeon.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(12),
               )
             : null,
@@ -128,7 +128,7 @@ class _MainNavigationPageState extends ConsumerState<MainNavigationPage> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
-                    colors: [_purpleNeon, _purpleNeon.withOpacity(0.5)],
+                    colors: [_purpleNeon, _purpleNeon.withValues(alpha: 0.5)],
                   ),
                 ),
                 child: CircleAvatar(
@@ -167,16 +167,16 @@ class _MainNavigationPageState extends ConsumerState<MainNavigationPage> {
                     const SizedBox(height: 4),
                     Text(
                       p?.email ?? '',
-                      style: TextStyle(color: Colors.white.withOpacity(0.6)),
+                      style: TextStyle(color: Colors.white.withValues(alpha: 0.6)),
                     ),
                     const SizedBox(height: 12),
                     // Plano Badge
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       decoration: BoxDecoration(
-                        color: _goldNeon.withOpacity(0.15),
+                        color: _goldNeon.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: _goldNeon.withOpacity(0.3)),
+                        border: Border.all(color: _goldNeon.withValues(alpha: 0.3)),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

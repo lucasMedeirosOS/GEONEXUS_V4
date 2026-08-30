@@ -162,7 +162,7 @@ class _FloatingSearchBarState extends ConsumerState<FloatingSearchBar>
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppTheme.primaryPurple.withOpacity(0.3),
+                    color: AppTheme.primaryPurple.withValues(alpha: 0.3),
                   ),
                 ),
                 child: _isLoadingSuggestions
@@ -196,7 +196,7 @@ class _FloatingSearchBarState extends ConsumerState<FloatingSearchBar>
                                 children: [
                                   Icon(
                                     Icons.person_outline,
-                                    color: AppTheme.primaryPurple.withOpacity(0.7),
+                                    color: AppTheme.primaryPurple.withValues(alpha: 0.7),
                                     size: 20,
                                   ),
                                   const SizedBox(width: 12),
@@ -211,7 +211,7 @@ class _FloatingSearchBarState extends ConsumerState<FloatingSearchBar>
                                   ),
                                   Icon(
                                     Icons.north_west,
-                                    color: AppTheme.textMuted.withOpacity(0.5),
+                                    color: AppTheme.textMuted.withValues(alpha: 0.5),
                                     size: 16,
                                   ),
                                 ],
@@ -256,19 +256,19 @@ class _FloatingSearchBarState extends ConsumerState<FloatingSearchBar>
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: AppTheme.cardDark.withOpacity(0.95),
+            color: AppTheme.cardDark.withValues(alpha: 0.95),
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: _isFocused 
-                  ? AppTheme.primaryPurple.withOpacity(0.5)
-                  : AppTheme.textMuted.withOpacity(0.2),
+                  ? AppTheme.primaryPurple.withValues(alpha: 0.5)
+                  : AppTheme.textMuted.withValues(alpha: 0.2),
               width: _isFocused ? 1.5 : 1,
             ),
             boxShadow: [
               BoxShadow(
                 color: _isFocused
-                    ? AppTheme.primaryPurple.withOpacity(0.2)
-                    : Colors.black.withOpacity(0.3),
+                    ? AppTheme.primaryPurple.withValues(alpha: 0.2)
+                    : Colors.black.withValues(alpha: 0.3),
                 blurRadius: _isFocused ? 20 : 12,
                 offset: const Offset(0, 4),
               ),
@@ -337,7 +337,7 @@ class _FloatingSearchBarState extends ConsumerState<FloatingSearchBar>
               Container(
                 height: 24,
                 width: 1,
-                color: AppTheme.textMuted.withOpacity(0.3),
+                color: AppTheme.textMuted.withValues(alpha: 0.3),
               ),
               IconButton(
                 icon: const Icon(Icons.mic, size: 22),

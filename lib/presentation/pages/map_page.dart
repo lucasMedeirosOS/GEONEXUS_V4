@@ -34,7 +34,7 @@ class _MapPageState extends ConsumerState<MapPage> {
   GoogleMapController? _mapController;
   String? _darkMapStyle;
   Set<Marker> _markers = {};
-  Set<Circle> _heatmapCircles = {};
+  final Set<Circle> _heatmapCircles = {};
 
   // Posição Inicial: Rio de Janeiro
   static const LatLng _rjCenter = LatLng(-22.9068, -43.1729);
@@ -89,7 +89,7 @@ class _MapPageState extends ConsumerState<MapPage> {
 
     // Glow externo
     final glowPaint = Paint()
-      ..color = color.withOpacity(0.25)
+      ..color = color.withValues(alpha: 0.25)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 12);
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
@@ -99,7 +99,7 @@ class _MapPageState extends ConsumerState<MapPage> {
 
     // Glow médio
     final glow2Paint = Paint()
-      ..color = color.withOpacity(0.4)
+      ..color = color.withValues(alpha: 0.4)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
@@ -130,7 +130,7 @@ class _MapPageState extends ConsumerState<MapPage> {
 
     // Centro luminoso
     final centerPaint = Paint()
-      ..color = Colors.white.withOpacity(0.8)
+      ..color = Colors.white.withValues(alpha: 0.8)
       ..style = PaintingStyle.fill;
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
@@ -211,7 +211,7 @@ class _MapPageState extends ConsumerState<MapPage> {
           // ============ LOADING STATE ============
           if (mapState is MapLoading)
             Container(
-              color: AppTheme.primaryBlack.withOpacity(0.7),
+              color: AppTheme.primaryBlack.withValues(alpha: 0.7),
               child: const ElegantLoadingIndicator(
                 message: 'CARREGANDO DADOS DO RJ',
               ),
@@ -290,7 +290,7 @@ class _MapPageState extends ConsumerState<MapPage> {
               bottom: 24,
               left: 16,
               right: 16,
-              child: _buildErrorCard((mapState as MapError).message),
+              child: _buildErrorCard((mapState).message),
             ),
         ],
       ),
@@ -336,7 +336,7 @@ class _MapPageState extends ConsumerState<MapPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: _purpleNeon.withOpacity(0.5),
+            color: _purpleNeon.withValues(alpha: 0.5),
             blurRadius: 16,
             offset: const Offset(0, 4),
           ),
@@ -404,14 +404,14 @@ class _MapPageState extends ConsumerState<MapPage> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E2E).withOpacity(0.95),
+        color: const Color(0xFF1E1E2E).withValues(alpha: 0.95),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: _purpleNeon.withOpacity(0.3),
+          color: _purpleNeon.withValues(alpha: 0.3),
         ),
         boxShadow: [
           BoxShadow(
-            color: _purpleNeon.withOpacity(0.2),
+            color: _purpleNeon.withValues(alpha: 0.2),
             blurRadius: 20,
           ),
         ],
@@ -421,7 +421,7 @@ class _MapPageState extends ConsumerState<MapPage> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: _purpleNeon.withOpacity(0.15),
+              color: _purpleNeon.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
             child: const Icon(
@@ -459,9 +459,9 @@ class _MapPageState extends ConsumerState<MapPage> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
-                color: _goldNeon.withOpacity(0.15),
+                color: _goldNeon.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: _goldNeon.withOpacity(0.3)),
+                border: Border.all(color: _goldNeon.withValues(alpha: 0.3)),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -489,9 +489,9 @@ class _MapPageState extends ConsumerState<MapPage> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.red.withOpacity(0.1),
+        color: Colors.red.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.red.withOpacity(0.3)),
+        border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -518,7 +518,7 @@ class _MapPageState extends ConsumerState<MapPage> {
         color: const Color(0xFF1A1A1A),
         border: Border(
           top: BorderSide(
-            color: _purpleNeon.withOpacity(0.2),
+            color: _purpleNeon.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
@@ -658,7 +658,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: _purpleNeon.withOpacity(0.15),
+                    color: _purpleNeon.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.how_to_vote, color: _purpleNeon),
@@ -689,9 +689,9 @@ class _MapPageState extends ConsumerState<MapPage> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: _goldNeon.withOpacity(0.1),
+                color: _goldNeon.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: _goldNeon.withOpacity(0.3)),
+                border: Border.all(color: _goldNeon.withValues(alpha: 0.3)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -809,12 +809,12 @@ class _MapPageState extends ConsumerState<MapPage> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [_orangeNeon, _orangeNeon.withOpacity(0.6)],
+                        colors: [_orangeNeon, _orangeNeon.withValues(alpha: 0.6)],
                       ),
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: _orangeNeon.withOpacity(0.3),
+                          color: _orangeNeon.withValues(alpha: 0.3),
                           blurRadius: 12,
                         ),
                       ],
@@ -864,7 +864,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                 const SizedBox(height: 8),
                 Text(
                   obra.descricao!,
-                  style: TextStyle(color: Colors.white.withOpacity(0.8)),
+                  style: TextStyle(color: Colors.white.withValues(alpha: 0.8)),
                 ),
                 const SizedBox(height: 20),
               ],
@@ -917,9 +917,9 @@ class _MapPageState extends ConsumerState<MapPage> {
                   children: obra.ruasAtendidas.map((rua) => Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: _goldNeon.withOpacity(0.15),
+                      color: _goldNeon.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: _goldNeon.withOpacity(0.3)),
+                      border: Border.all(color: _goldNeon.withValues(alpha: 0.3)),
                     ),
                     child: Text(
                       rua,
@@ -971,7 +971,7 @@ class _MapPageState extends ConsumerState<MapPage> {
         ),
         content: Text(
           'Tem certeza que deseja excluir "${obra.titulo}"?\n\nEsta ação não pode ser desfeita.',
-          style: TextStyle(color: Colors.white.withOpacity(0.8)),
+          style: TextStyle(color: Colors.white.withValues(alpha: 0.8)),
         ),
         actions: [
           TextButton(
@@ -1051,9 +1051,9 @@ class _MapPageState extends ConsumerState<MapPage> {
       margin: const EdgeInsets.only(top: 4),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: color.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.5)),
+        border: Border.all(color: color.withValues(alpha: 0.5)),
       ),
       child: Text(
         status.displayName,
@@ -1086,7 +1086,7 @@ class _MapPageState extends ConsumerState<MapPage> {
         children: [
           Text(
             '$cargo: ',
-            style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 13),
+            style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 13),
           ),
           Text(
             nome,
@@ -1101,9 +1101,9 @@ class _MapPageState extends ConsumerState<MapPage> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _orangeNeon.withOpacity(0.1),
+        color: _orangeNeon.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: _orangeNeon.withOpacity(0.3)),
+        border: Border.all(color: _orangeNeon.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -1120,7 +1120,7 @@ class _MapPageState extends ConsumerState<MapPage> {
           Text(
             label,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
               fontSize: 12,
             ),
           ),
@@ -1172,12 +1172,12 @@ class _MapPageState extends ConsumerState<MapPage> {
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [_purpleNeon, _purpleNeon.withOpacity(0.6)],
+                        colors: [_purpleNeon, _purpleNeon.withValues(alpha: 0.6)],
                       ),
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: _purpleNeon.withOpacity(0.3),
+                          color: _purpleNeon.withValues(alpha: 0.3),
                           blurRadius: 12,
                         ),
                       ],
@@ -1308,12 +1308,12 @@ class _MapPageState extends ConsumerState<MapPage> {
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: isHighlighted
-                              ? _goldNeon.withOpacity(0.15)
-                              : Colors.white.withOpacity(0.05),
+                              ? _goldNeon.withValues(alpha: 0.15)
+                              : Colors.white.withValues(alpha: 0.05),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: isHighlighted
-                                ? _goldNeon.withOpacity(0.5)
+                                ? _goldNeon.withValues(alpha: 0.5)
                                 : Colors.white12,
                             width: isHighlighted ? 2 : 1,
                           ),
@@ -1325,8 +1325,8 @@ class _MapPageState extends ConsumerState<MapPage> {
                               width: 36,
                               height: 36,
                               decoration: BoxDecoration(
-                                color: medalColor?.withOpacity(0.2) ?? 
-                                       _purpleNeon.withOpacity(0.1),
+                                color: medalColor?.withValues(alpha: 0.2) ?? 
+                                       _purpleNeon.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Center(
@@ -1376,8 +1376,8 @@ class _MapPageState extends ConsumerState<MapPage> {
                               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                               decoration: BoxDecoration(
                                 color: isHighlighted
-                                    ? _goldNeon.withOpacity(0.2)
-                                    : _purpleNeon.withOpacity(0.15),
+                                    ? _goldNeon.withValues(alpha: 0.2)
+                                    : _purpleNeon.withValues(alpha: 0.15),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
@@ -1458,7 +1458,7 @@ class _MapPageState extends ConsumerState<MapPage> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: _purpleNeon.withOpacity(0.15),
+                    color: _purpleNeon.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.how_to_vote, color: _purpleNeon),

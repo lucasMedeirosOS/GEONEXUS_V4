@@ -74,12 +74,12 @@ class DashboardPage extends ConsumerWidget {
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [_purpleNeon, _purpleNeon.withOpacity(0.6)],
+                  colors: [_purpleNeon, _purpleNeon.withValues(alpha: 0.6)],
                 ),
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: _purpleNeon.withOpacity(0.3),
+                    color: _purpleNeon.withValues(alpha: 0.3),
                     blurRadius: 12,
                   ),
                 ],
@@ -104,9 +104,9 @@ class DashboardPage extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: _goldNeon.withOpacity(0.15),
+                      color: _goldNeon.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: _goldNeon.withOpacity(0.3)),
+                      border: Border.all(color: _goldNeon.withValues(alpha: 0.3)),
                     ),
                     child: Text(
                       '$cargo · $ano',
@@ -150,9 +150,9 @@ class DashboardPage extends ConsumerWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: const Center(
         child: SizedBox(
@@ -171,9 +171,9 @@ class DashboardPage extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.red.withOpacity(0.1),
+        color: Colors.red.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.red.withOpacity(0.3)),
+        border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -185,7 +185,7 @@ class DashboardPage extends ConsumerWidget {
           ),
           Text(
             error,
-            style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 12),
+            style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 12),
           ),
         ],
       ),
@@ -324,15 +324,15 @@ class DashboardPage extends ConsumerWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            _purpleNeon.withOpacity(0.15),
-            _purpleNeon.withOpacity(0.05),
+            _purpleNeon.withValues(alpha: 0.15),
+            _purpleNeon.withValues(alpha: 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _purpleNeon.withOpacity(0.3)),
+        border: Border.all(color: _purpleNeon.withValues(alpha: 0.3)),
         boxShadow: [
           BoxShadow(
-            color: _purpleNeon.withOpacity(0.1),
+            color: _purpleNeon.withValues(alpha: 0.1),
             blurRadius: 20,
           ),
         ],
@@ -343,7 +343,7 @@ class DashboardPage extends ConsumerWidget {
           Text(
             'Total de Votos na Região',
             style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
               fontSize: 14,
             ),
           ),
@@ -381,16 +381,16 @@ class DashboardPage extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: _goldNeon.withOpacity(0.1),
+        color: _goldNeon.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: _goldNeon.withOpacity(0.3)),
+        border: Border.all(color: _goldNeon.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: _goldNeon.withOpacity(0.2),
+              color: _goldNeon.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(10),
             ),
             child: const Icon(Icons.star, color: _goldNeon, size: 22),
@@ -442,9 +442,9 @@ class DashboardPage extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
@@ -461,7 +461,7 @@ class DashboardPage extends ConsumerWidget {
           Text(
             label,
             style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
               fontSize: 11,
             ),
           ),
@@ -483,9 +483,9 @@ class DashboardPage extends ConsumerWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.15),
+          color: color.withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.3)),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

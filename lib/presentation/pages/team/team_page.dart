@@ -83,7 +83,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
             Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.15),
+                color: Colors.red.withValues(alpha: 0.15),
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.lock, color: Colors.red, size: 48),
@@ -101,7 +101,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
             Text(
               'Esta funcionalidade está disponível\napenas para usuários Premium.',
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white.withOpacity(0.6)),
+              style: TextStyle(color: Colors.white.withValues(alpha: 0.6)),
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
@@ -128,7 +128,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
           const SizedBox(height: 16),
           Text(
             'Carregando equipe...',
-            style: TextStyle(color: Colors.white.withOpacity(0.6)),
+            style: TextStyle(color: Colors.white.withValues(alpha: 0.6)),
           ),
         ],
       ),
@@ -148,7 +148,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
           ),
           Text(
             error,
-            style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 12),
+            style: TextStyle(color: Colors.white.withValues(alpha: 0.5), fontSize: 12),
           ),
         ],
       ),
@@ -165,7 +165,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
             const SizedBox(height: 16),
             Text(
               'Nenhum membro encontrado',
-              style: TextStyle(color: Colors.white.withOpacity(0.6)),
+              style: TextStyle(color: Colors.white.withValues(alpha: 0.6)),
             ),
           ],
         ),
@@ -201,10 +201,10 @@ class _TeamPageState extends ConsumerState<TeamPage> {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [_purpleNeon.withOpacity(0.15), Colors.transparent],
+          colors: [_purpleNeon.withValues(alpha: 0.15), Colors.transparent],
         ),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _purpleNeon.withOpacity(0.3)),
+        border: Border.all(color: _purpleNeon.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -235,7 +235,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
         Text(
           label,
           style: TextStyle(
-            color: Colors.white.withOpacity(0.5),
+            color: Colors.white.withValues(alpha: 0.5),
             fontSize: 11,
           ),
         ),
@@ -248,9 +248,9 @@ class _TeamPageState extends ConsumerState<TeamPage> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
       ),
       child: Row(
         children: [
@@ -260,7 +260,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
             height: 48,
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                colors: [_purpleNeon, _purpleNeon.withOpacity(0.5)],
+                colors: [_purpleNeon, _purpleNeon.withValues(alpha: 0.5)],
               ),
               borderRadius: BorderRadius.circular(12),
             ),
@@ -302,7 +302,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
                 Text(
                   member.email,
                   style: TextStyle(
-                    color: Colors.white.withOpacity(0.5),
+                    color: Colors.white.withValues(alpha: 0.5),
                     fontSize: 12,
                   ),
                 ),
@@ -312,7 +312,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
-                        color: _orangeNeon.withOpacity(0.15),
+                        color: _orangeNeon.withValues(alpha: 0.15),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
@@ -335,7 +335,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
                     Text(
                       member.ultimoAcessoFormatado,
                       style: TextStyle(
-                        color: Colors.white.withOpacity(0.4),
+                        color: Colors.white.withValues(alpha: 0.4),
                         fontSize: 11,
                       ),
                     ),
@@ -347,7 +347,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
 
           // Menu de ações
           PopupMenuButton<String>(
-            icon: Icon(Icons.more_vert, color: Colors.white.withOpacity(0.5)),
+            icon: Icon(Icons.more_vert, color: Colors.white.withValues(alpha: 0.5)),
             color: const Color(0xFF1E1E2E),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             onSelected: (action) => _handleAction(action, member),
@@ -413,9 +413,9 @@ class _TeamPageState extends ConsumerState<TeamPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: color.withOpacity(0.3)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -469,7 +469,7 @@ class _TeamPageState extends ConsumerState<TeamPage> {
         ),
         content: Text(
           'O plano será alterado para: $planLabel',
-          style: TextStyle(color: Colors.white.withOpacity(0.8)),
+          style: TextStyle(color: Colors.white.withValues(alpha: 0.8)),
         ),
         actions: [
           TextButton(
