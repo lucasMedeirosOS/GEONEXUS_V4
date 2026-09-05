@@ -5,12 +5,10 @@ GeoNexus - Correcao de Encoding e Normalizacao de Colunas de Locais de Votacao
 import glob
 import os
 import tempfile
-from io import StringIO
-
 import geopandas as gpd
 import polars as pl
 from shapely.geometry import Point
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 DB_URL = os.getenv(
     "DATABASE_URL",
@@ -69,6 +67,32 @@ def recarregar_locais(ano: int = 2022):
         os.remove(caminho_utf8)
 
     print(f"Total de registros filtrados no Rio de Janeiro: {df.height}")
+
+    with engine.begin() as connection:
+        connection.execute(text("CREATE EXTENSION IF NOT EXISTS postgis"))
+        connection.execute(text("""
+            CREATE TABLE IF NOT EXISTS locais_votacao (
+                id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+                ano_eleicao INT NOT NULL,
+                nr_zona SMALLINT NOT NULL,
+                nr_secao SMALLINT NOT NULL,
+                nome_local VARCHAR(255) NOT NULL,
+                endereco VARCHAR(255),
+                bairro VARCHAR(100),
+                nr_cep VARCHAR(20),
+                latitude DOUBLE PRECISION,
+                longitude DOUBLE PRECISION,
+                geom GEOMETRY(Point, 4326)
+            )
+        """))
+        connection.execute(text(
+            "CREATE INDEX IF NOT EXISTS idx_locais_votacao_zona_secao "
+            "ON locais_votacao (nr_zona, nr_secao)"
+        ))
+        connection.execute(text(
+            "CREATE INDEX IF NOT EXISTS idx_locais_votacao_geom "
+            "ON locais_votacao USING GIST (geom)"
+        ))
 
     df_geo = df.filter(
         pl.col("latitude").is_not_null() & pl.col("longitude").is_not_null()
