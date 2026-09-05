@@ -8,7 +8,7 @@ from typing import Dict, List, Optional
 import polars as pl
 import geopandas as gpd
 from shapely.geometry import Point
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger("TSEProcessor")
@@ -37,21 +37,26 @@ class TSEProcessor:
         """
         logger.info(f"Processando locais de votação para a eleição {ano_eleicao}...")
 
-        # Leitura com scan_csv (avaliação preguiçosa - lazy)
+        # Alguns arquivos de locais do TSE usam AA_ELEICAO no lugar de ANO_ELEICAO.
+        lazy_df = pl.scan_csv(
+            arquivo_locais_csv,
+            separator=";",
+            encoding="utf8-lossy",
+            truncate_ragged_lines=True,
+            infer_schema_length=10000
+        )
+        coluna_ano = "ANO_ELEICAO"
+        if coluna_ano not in lazy_df.collect_schema().names():
+            coluna_ano = "AA_ELEICAO"
+
         lazy_df = (
-            pl.scan_csv(
-                arquivo_locais_csv,
-                separator=";",
-                encoding="utf8-lossy",
-                truncate_ragged_lines=True,
-                infer_schema_length=10000
-            )
+            lazy_df
             .filter(
-                (pl.col("CD_MUNICIPIO").cast(pl.Int32) == self.CODIGO_MUNICIPIO_RIO_TSE) &
-                (pl.col("ANO_ELEICAO").cast(pl.Int32) == ano_eleicao)
+                (pl.col("CD_MUNICIPIO").cast(pl.Int32) == self.CODIGO_MUNICIPIO_RIO_TSE)
+                & (pl.col(coluna_ano).cast(pl.Int32) == ano_eleicao)
             )
             .select([
-                pl.col("ANO_ELEICAO").cast(pl.Int32),
+                pl.col(coluna_ano).cast(pl.Int32).alias("ANO_ELEICAO"),
                 pl.col("NR_ZONA").cast(pl.Int16),
                 pl.col("NR_SECAO").cast(pl.Int16),
                 pl.col("NM_LOCAL_VOTACAO")
@@ -147,7 +152,7 @@ class TSEProcessor:
         # Converte para GeoPandas apenas os registros que possuem coordenadas válidas
         df_geo = df_locais.filter(pl.col("latitude").is_not_null() & pl.col("longitude").is_not_null()).to_pandas()
 
-        if not df_geo.empty:
+        if not df_geo.empty and not inspect(self.engine).has_table("locais_votacao"):
             # PostGIS requer Point(Longitude, Latitude)
             geometrias = [Point(xy) for xy in zip(df_geo["longitude"], df_geo["latitude"])]
             gdf_locais = gpd.GeoDataFrame(df_geo, geometry=geometrias, crs="EPSG:4326")
@@ -162,12 +167,13 @@ class TSEProcessor:
 
         # Carga dos votos na partição daquele ano
         df_votacao_pd = df_votacao.to_pandas()
+        df_votacao_pd.columns = [coluna.lower() for coluna in df_votacao_pd.columns]
         df_votacao_pd.to_sql(
             name=f"votacao_secao_{ano_eleicao}",
             con=self.engine,
             if_exists="append",
             index=False,
             method="multi",
-            chunksize=10000
+            chunksize=1000
         )
         logger.info(f"Carga da partição votacao_secao_{ano_eleicao} finalizada com sucesso.")

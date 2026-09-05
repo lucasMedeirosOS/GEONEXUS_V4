@@ -1,9 +1,10 @@
 """
 GeoNexus - Disparo de Ingestao de Dados Eleitorais
-Le diretamente do Data Lake local ou diretorio de storage sem dependencia de web scraping.
+Varre recursivamente o diretorio data/raw/tse/{ano} e encontra os CSVs nas subpastas.
 """
 
 import argparse
+import glob
 import logging
 import os
 
@@ -19,22 +20,43 @@ DB_URL = os.getenv(
 )
 
 
+def encontrar_arquivo_recursivo(pasta_ano: str, termo_busca: str) -> str | None:
+    """Busca em profundidade um arquivo CSV que contenha o termo no nome."""
+    arquivos = glob.glob(
+        os.path.join(pasta_ano, "**", f"*{termo_busca}*.csv"),
+        recursive=True,
+    )
+    return arquivos[0] if arquivos else None
+
+
 def processar_ano(ano: int, pasta_base: str = "./data/raw/tse"):
     pasta_ano = os.path.join(pasta_base, str(ano))
 
-    arquivo_locais = os.path.join(pasta_ano, f"eleitorado_local_votacao_{ano}.csv")
-    arquivo_votacao = os.path.join(pasta_ano, f"votacao_secao_{ano}_RJ.csv")
+    logger.info(f"Localizando arquivos para a eleicao {ano} dentro de: {pasta_ano}")
 
-    logger.info(f"Verificando arquivos para a eleicao {ano} em: {pasta_ano}")
-
-    if not os.path.exists(arquivo_locais):
-        logger.error(f"Arquivo de locais de votacao nao encontrado: {arquivo_locais}")
-        return
-    if not os.path.exists(arquivo_votacao):
-        logger.error(f"Arquivo de votacao por secao nao encontrado: {arquivo_votacao}")
+    if not os.path.exists(pasta_ano):
+        logger.error(f"Pasta do ano nao encontrada: {pasta_ano}")
         return
 
-    logger.info(f"Arquivos validados. Iniciando processamento do ano {ano}...")
+    arquivo_locais = encontrar_arquivo_recursivo(
+        pasta_ano,
+        f"eleitorado_local_votacao_{ano}",
+    )
+    arquivo_votacao = encontrar_arquivo_recursivo(
+        pasta_ano,
+        f"votacao_secao_{ano}_RJ",
+    )
+
+    if not arquivo_locais:
+        logger.error(f"Arquivo de locais de votacao nao encontrado para {ano}")
+        return
+    if not arquivo_votacao:
+        logger.error(f"Arquivo de votacao por secao nao encontrado para {ano}")
+        return
+
+    logger.info(f"[OK] Arquivo de locais: {arquivo_locais}")
+    logger.info(f"[OK] Arquivo de votacao: {arquivo_votacao}")
+    logger.info("Iniciando ingestao com Polars (Municipio do Rio de Janeiro - 60011)...")
     processor = TSEProcessor(DB_URL)
 
     df_locais = processor.processar_locais_votacao(arquivo_locais, ano)
