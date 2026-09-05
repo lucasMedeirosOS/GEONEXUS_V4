@@ -1,6 +1,6 @@
 """
 GeoNexus - Pipeline ETL de Engenharia de Dados Eleitorais
-Módulo de Processamento Multi-Cargo (Gerais: Presidente, Governador, Senador, Deputados | Municipais)
+Módulo de Processamento Multi-Cargo (Gerais e Municipais) sem dependência de totalização externa.
 """
 
 import logging
@@ -16,7 +16,6 @@ logger = logging.getLogger("TSEProcessor")
 class TSEProcessor:
     CODIGO_MUNICIPIO_RIO_TSE = 60011
 
-    # Tabela canônica de cargos do TSE
     TABELA_CARGOS: Dict[int, str] = {
         1: "PRESIDENTE",
         3: "GOVERNADOR",
@@ -34,7 +33,7 @@ class TSEProcessor:
     def processar_locais_votacao(self, arquivo_locais_csv: str, ano_eleicao: int) -> pl.DataFrame:
         """
         Lê, normaliza e limpa o cadastro de locais e seções do TSE.
-        Trata apóstrofos, símbolos, encodings legados e formatação de coordenadas.
+        Lê e normaliza o cadastro de locais e seções do Rio de Janeiro.
         """
         logger.info(f"Processando locais de votação para a eleição {ano_eleicao}...")
 
@@ -53,13 +52,12 @@ class TSEProcessor:
             )
             .select([
                 pl.col("ANO_ELEICAO").cast(pl.Int32),
-                pl.col("NR_ZONA").cast(pl.Int32),
-                pl.col("NR_SECAO").cast(pl.Int32),
-                # Limpeza e sanitização de nomes de colégios e endereços
+                pl.col("NR_ZONA").cast(pl.Int16),
+                pl.col("NR_SECAO").cast(pl.Int16),
                 pl.col("NM_LOCAL_VOTACAO")
                 .str.strip_chars()
                 .str.replace_all(r"[\x00-\x1F\x7F]", "")  # Remove caracteres de controle
-                .str.replace_all("'", "''")              # Escapa apóstrofos com segurança
+                .str.replace_all("'", "''")
                 .str.to_uppercase(),
                 pl.col("DS_ENDERECO")
                 .str.strip_chars()
@@ -70,7 +68,6 @@ class TSEProcessor:
                 .str.replace_all("'", "''")
                 .str.to_uppercase(),
                 pl.col("NR_CEP").cast(pl.Utf8).str.slice(0, 8),
-                # Normalização de latitude e longitude caso existam vírgulas
                 pl.col("NR_LATITUDE")
                 .cast(pl.Utf8)
                 .str.replace(",", ".")
@@ -85,22 +82,19 @@ class TSEProcessor:
         )
 
         df = lazy_df.collect()
-        logger.info(f"Locais de votação processados: {df.height} registros encontrados no Rio de Janeiro.")
+        logger.info(f"Locais de votação processados: {df.height} seções mapeadas na capital.")
         return df
 
     def processar_votacao_secao(
         self,
         arquivo_votacao_csv: str,
         ano_eleicao: int,
-        cargos_alvo: Optional[List[int]] = None,
-        turno: Optional[int] = None
+        cargos_alvo: Optional[List[int]] = None
     ) -> pl.DataFrame:
         """
-        Processa os votos por seção para eleições gerais e municipais.
-        - cargos_alvo: Lista de códigos numéricos. Se None, processa todos.
-        - turno: 1, 2 ou None para processar ambos os turnos.
+        Lê e consolida os votos de todas as urnas do Rio de Janeiro.
         """
-        logger.info(f"Iniciando processamento da eleição {ano_eleicao} (Município Rio de Janeiro)...")
+        logger.info(f"Processando votos por seção para a eleição {ano_eleicao}...")
 
         filtros = [
             pl.col("CD_MUNICIPIO").cast(pl.Int32) == self.CODIGO_MUNICIPIO_RIO_TSE,
@@ -109,9 +103,6 @@ class TSEProcessor:
 
         if cargos_alvo:
             filtros.append(pl.col("CD_CARGO").cast(pl.Int32).is_in(cargos_alvo))
-
-        if turno:
-            filtros.append(pl.col("NR_TURNO").cast(pl.Int32) == turno)
 
         lazy_df = (
             pl.scan_csv(
@@ -144,59 +135,8 @@ class TSEProcessor:
         )
 
         df = lazy_df.collect()
-        logger.info(f"Processamento concluído: {df.height} registros carregados para {ano_eleicao}.")
+        logger.info(f"Votação processada com sucesso: {df.height} linhas geradas.")
         return df
-
-    def carregar_votos_banco(self, df_votos: pl.DataFrame, ano_eleicao: int):
-        """Insere os dados processados na partição correspondente ao ano."""
-        nome_tabela = f"votacao_secao_{ano_eleicao}"
-        logger.info(f"Iniciando carga de {df_votos.height} registros na tabela {nome_tabela}...")
-
-        df_votos.to_pandas().to_sql(
-            name=nome_tabela,
-            con=self.engine,
-            if_exists="append",
-            index=False,
-            method="multi",
-            chunksize=15000
-        )
-        logger.info(f"Carga da partição {nome_tabela} realizada com sucesso.")
-
-    def validar_totais_oficiais(self, df_secoes: pl.DataFrame, arquivo_totalizacao_oficial_csv: str, numero_candidato_teste: int) -> bool:
-        """
-        Sanity Check / Reconciliação:
-        Compara a soma das seções calculada pelo pipeline com o arquivo oficial consolidado do TSE.
-        """
-        logger.info(f"Iniciando validação de auditoria para o candidato nº {numero_candidato_teste}...")
-
-        # 1. Soma calculada pelas seções
-        votos_calculados = (
-            df_secoes.filter(pl.col("NR_VOTAVEL") == numero_candidato_teste)
-            .select(pl.col("QT_VOTOS").sum())
-            .item()
-        )
-
-        # 2. Leitura do arquivo oficial de totalização do TSE
-        df_oficial = (
-            pl.scan_csv(arquivo_totalizacao_oficial_csv, separator=";", encoding="utf8-lossy", truncate_ragged_lines=True)
-            .filter(
-                (pl.col("CD_MUNICIPIO").cast(pl.Int32) == self.CODIGO_MUNICIPIO_RIO_TSE) &
-                (pl.col("NR_CANDIDATO").cast(pl.Int32) == numero_candidato_teste)
-            )
-            .select(pl.col("QT_TOTAL_VOTOS_VALIDOS").cast(pl.Int32).sum())
-            .collect()
-        )
-
-        votos_oficiais = df_oficial.item() if df_oficial.height > 0 else 0
-
-        logger.info(f"Resultado da Verificação: Calculado = {votos_calculados} | Oficial TSE = {votos_oficiais}")
-
-        if votos_calculados == votos_oficiais:
-            logger.info("AUDITORIA CONCLUÍDA: 100% de precisão confirmada com os dados oficiais do TSE.")
-            return True
-        else:
-            logger.warning(f"Divergência identificada: Diferença de {votos_calculados - votos_oficiais} votos.")
-            return False
 
     def carregar_banco(self, df_locais: pl.DataFrame, df_votacao: pl.DataFrame, ano_eleicao: int):
         """
