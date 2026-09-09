@@ -6,6 +6,7 @@ import '../providers/auth_providers.dart';
 import 'map_page.dart';
 import 'dashboard_page.dart';
 import 'auth/login_page.dart';
+import '../screens/mapa_eleitoral_screen.dart';
 
 /// Página principal com navegação por abas
 /// 
@@ -13,6 +14,7 @@ import 'auth/login_page.dart';
 /// - Aba 0: Mapa (MapPage)
 /// - Aba 1: Dashboard (DashboardPage)
 /// - Aba 2: Perfil
+/// - Aba 3: Inteligência Eleitoral
 class MainNavigationPage extends ConsumerStatefulWidget {
   const MainNavigationPage({super.key});
 
@@ -42,6 +44,7 @@ class _MainNavigationPageState extends ConsumerState<MainNavigationPage> {
           const MapPage(),
           DashboardPage(onNavigateToTab: _navigateToTab),
           _buildProfilePage(),
+          const MapaEleitoralScreen(),
         ],
       ),
       bottomNavigationBar: _buildBottomNav(),
@@ -69,6 +72,7 @@ class _MainNavigationPageState extends ConsumerState<MainNavigationPage> {
               _buildNavItem(0, Icons.map, 'Mapa'),
               _buildNavItem(1, Icons.analytics, 'Dashboard'),
               _buildNavItem(2, Icons.person, 'Perfil'),
+              _buildNavItem(3, Icons.how_to_vote, 'Eleitoral'),
             ],
           ),
         ),

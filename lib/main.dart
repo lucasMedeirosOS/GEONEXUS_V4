@@ -1,120 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'presentation/core/theme/app_theme.dart';
-import 'presentation/pages/auth/login_page.dart';
-import 'presentation/pages/main_navigation_page.dart';
-import 'presentation/providers/auth_providers.dart';
+import 'presentation/screens/mapa_eleitoral_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Carrega o .env com segurança sem travar o aplicativo
   try {
-    await dotenv.load(fileName: '.env');
+    await dotenv.load(fileName: ".env");
   } catch (e) {
-    throw StateError('Não foi possível carregar o arquivo .env: $e');
+    debugPrint("Aviso: arquivo .env não carregado: $e");
   }
 
-  final supabaseUrl = dotenv.env['SUPABASE_URL'];
-  final supabaseKey = dotenv.env['SUPABASE_ANON_KEY'];
-
-  if (supabaseUrl == null || supabaseUrl.isEmpty ||
-      supabaseUrl.contains('SEU_PROJETO') ||
-      supabaseKey == null || supabaseKey.isEmpty ||
-      supabaseKey.contains('SUA_ANON_KEY')) {
-    throw StateError('SUPABASE_URL e SUPABASE_ANON_KEY devem ser configuradas no .env');
-  }
-
-  await Supabase.initialize(
-    url: supabaseUrl,
-    anonKey: supabaseKey,
-    debug: false,
-  );
-
-  runApp(
-    const ProviderScope(
-      child: GeonexusApp(),
-    ),
-  );
+  runApp(const GeoNexusApp());
 }
 
-class GeonexusApp extends StatelessWidget {
-  const GeonexusApp({super.key});
+class GeoNexusApp extends StatelessWidget {
+  const GeoNexusApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GEONEXUS',
+      title: 'GeoNexus',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.darkTechTheme,
-      home: const AuthWrapper(),
-    );
-  }
-}
-
-/// Widget que gerencia o fluxo de autenticação
-/// 
-/// Redireciona para LoginPage se não logado, ou MainNavigationPage se autenticado.
-class AuthWrapper extends ConsumerWidget {
-  const AuthWrapper({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final authState = ref.watch(authSessionProvider);
-
-    return authState.when(
-      loading: () => const Scaffold(
-        backgroundColor: Color(0xFF0D0D1A),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(
-                color: Color(0xFFBB86FC),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Carregando...',
-                style: TextStyle(color: Colors.white54),
-              ),
-            ],
-          ),
-        ),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1A237E)),
+        useMaterial3: true,
       ),
-      error: (error, _) => Scaffold(
-        backgroundColor: const Color(0xFF0D0D1A),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.error_outline, color: Colors.red.shade300, size: 48),
-              const SizedBox(height: 16),
-              Text(
-                'Erro: $error',
-                style: TextStyle(color: Colors.red.shade300),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => ref.invalidate(authSessionProvider),
-                child: const Text('Tentar novamente'),
-              ),
-            ],
-          ),
-        ),
-      ),
-      data: (authState) {
-        // Se não há sessão ou evento é de signOut, vai para login
-        if (authState.session == null) {
-          debugPrint('🔐 Usuário não autenticado -> LoginPage');
-          return const LoginPage();
-        }
-
-        // Usuário autenticado -> MainNavigationPage
-        debugPrint('🔐 Usuário autenticado: ${authState.session!.user.email}');
-        return const MainNavigationPage();
-      },
+      home: const MapaEleitoralScreen(),
     );
   }
 }

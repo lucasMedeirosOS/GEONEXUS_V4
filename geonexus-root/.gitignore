@@ -21,3 +21,22 @@ Thumbs.db
 
 # Temporary files
 *.tmp
+
+# Ignorar dados brutos e pesados do pipeline
+data/raw/
+data/processed/
+*.zip
+*.csv
+
+# Manter os arquivos de estrutura de pastas
+!data/
+!data/raw/
+!data/raw/tse/
+!data/raw/tse/2020/
+!data/raw/tse/2022/
+!data/raw/tse/2024/
+!data/processed/
+data/raw/tse/2020/*
+data/raw/tse/2022/*
+data/raw/tse/2024/*
+!data/**/.gitkeep
